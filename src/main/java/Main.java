@@ -11,11 +11,11 @@ public class Main {
             String[] types = {"type","echo","exit"};
             if(Objects.equals(command.toLowerCase(), "exit")){
                 return;
-            } else if (command.startsWith("echo ")) {
+            } else if(command.startsWith("echo ")) {
                 System.out.println(command.substring(5));
             } else if(command.startsWith("type ")) {
                 for(String newCommand : types){
-                    if(Objects.equals(command,newCommand)){
+                    if(Objects.equals(command.substring(5),newCommand)){
                         System.out.println(command.substring(5)+ " is a shell builtin");
                     }
                 }
