@@ -30,8 +30,9 @@ public class Main {
                     for(String word: paths){
                         Path path = Path.of(word,command.substring(5));
                         if(Files.isExecutable(path)){
-                        System.out.println(command.substring(5)+" is "+path.toAbsolutePath());
-                        break;
+                            System.out.println(command.substring(5)+" is "+path.toAbsolutePath());
+                            found = true;
+                            break;
                         }
                     }
                 }
