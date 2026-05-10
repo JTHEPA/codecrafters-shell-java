@@ -14,10 +14,15 @@ public class Main {
             } else if(command.startsWith("echo ")) {
                 System.out.println(command.substring(5));
             } else if(command.startsWith("type ")) {
+                boolean found = false;
                 for(String newCommand : types){
                     if(Objects.equals(command.substring(5),newCommand)){
+                        found = true;
                         System.out.println(command.substring(5)+ " is a shell builtin");
                     }
+                }
+                if(!found){
+                    System.out.println(command.substring(5)+ ": not found");
                 }
             } else{
                 System.out.println(command+ ": command not found");
