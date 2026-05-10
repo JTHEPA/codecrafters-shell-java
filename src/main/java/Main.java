@@ -1,3 +1,4 @@
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -24,8 +25,14 @@ public class Main {
                     }
                 }
                 if(!found){
-                    if(Files.isExecutable(Path.of(command.substring(5)))){
-                        System.out.println(command.substring(5)+" is "+Path.of(command));
+                    String search = System.getenv("PATH");
+                    String[] paths = search.split(File.pathSeparator);
+                    for(String word: paths){
+                        Path path = Path.of(word,command.substring(5));
+                        if(Files.isExecutable(path)){
+                        System.out.println(command.substring(5)+" is "+path.toAbsolutePath());
+                        break;
+                        }
                     }
                 }
                 if(!found){
