@@ -25,7 +25,7 @@ public class Main {
                 }
                 if(!found){
                     if(Files.isExecutable(Path.of(command.substring(5)))){
-                        System.out.println(command.substring(5)+" is ");
+                        System.out.println(command.substring(5)+" is "+Path.of(command));
                     }
                 }
                 if(!found){
