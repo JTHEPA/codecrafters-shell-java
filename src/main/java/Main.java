@@ -17,8 +17,6 @@ public class Main {
                 for(String newCommand : types){
                     if(Objects.equals(command.substring(5),newCommand)){
                         System.out.println(command.substring(5)+ " is a shell builtin");
-                    }else{
-                        System.out.println(command.substring(5)+ ": command not found");
                     }
                 }
             } else{
