@@ -9,8 +9,12 @@ public class Main {
             String command = scanner.next();
             if(Objects.equals(command.toLowerCase(), "exit")){
                 return;
+            } else if (command.startsWith("echo ")) {
+                System.out.println(command.substring(5));
+            }else{
+                System.out.println(command+ ": command not found");
             }
-            System.out.println(command + ": command not found");
+
         }
     }
 }
