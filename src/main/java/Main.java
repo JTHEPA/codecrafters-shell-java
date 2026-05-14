@@ -38,29 +38,41 @@ public class Main {
                 }
                 if (!found) {
                     System.out.println(command.substring(5) + ": not found");
-                } else if (!found) {
+                }else if (!found) {
 
-                    String cmd = command.substring(5);
+                    String[] parts = command.split(" ");
 
-                    String search = System.getenv("PATH");
-                    String[] paths = search.split(File.pathSeparator);
+                    if (parts.length < 2) {
+                        System.out.println("type: missing argument");
+                        return;
+                    }
 
-                    for (String directory : paths) {
+                    String cmd = parts[1];
 
-                        Path path = Path.of(directory, cmd);
+                    String pathEnv = System.getenv("PATH");
 
-                        if (Files.exists(path) && Files.isExecutable(path)) {
+                    if (pathEnv != null) {
 
-                            System.out.println(cmd + " is " + path.toAbsolutePath());
+                        String[] directories = pathEnv.split(File.pathSeparator);
 
-                            found = true;
-                            break;
+                        for (String directory : directories) {
+
+                            Path fullPath = Path.of(directory, cmd);
+
+                            if (Files.exists(fullPath) &&
+                                    Files.isExecutable(fullPath)) {
+
+                                System.out.println(
+                                        cmd + " is " + fullPath.toAbsolutePath()
+                                );
+
+                                found = true;
+                                break;
+                            }
                         }
                     }
-
-                    if (!found) {
-                        System.out.println(cmd + ": not found");
-                    }
+                }if (!found) {
+                    System.out.println(command + ": not found");
                 }
 
                 }else{
