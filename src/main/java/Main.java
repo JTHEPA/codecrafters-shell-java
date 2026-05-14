@@ -39,21 +39,29 @@ public class Main {
                 if (!found) {
                     System.out.println(command.substring(5) + ": not found");
                 } else if (!found) {
-                    for (String newCommand : types) {
-                        if (Objects.equals(command.substring(5), newCommand)) {
-                            String search = System.getenv("PATH");
-                            String[] paths = search.split(File.pathSeparator);
-                            for (String word : paths) {
-                                Path path = Path.of(word, command.substring(5));
-                                if (Files.isExecutable(path)) {
-                                    System.out.println(command.substring(5) + " is " + path.toAbsolutePath());
-                                    found = true;
-                                    break;
-                                }
-                            }
-                        }
 
+                    String cmd = command.substring(5);
+
+                    String search = System.getenv("PATH");
+                    String[] paths = search.split(File.pathSeparator);
+
+                    for (String directory : paths) {
+
+                        Path path = Path.of(directory, cmd);
+
+                        if (Files.exists(path) && Files.isExecutable(path)) {
+
+                            System.out.println(cmd + " is " + path.toAbsolutePath());
+
+                            found = true;
+                            break;
+                        }
                     }
+
+                    if (!found) {
+                        System.out.println(cmd + ": not found");
+                    }
+                }
 
                 }else{
                     System.out.println(command + ": command not found");
