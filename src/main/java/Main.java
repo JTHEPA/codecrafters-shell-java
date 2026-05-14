@@ -7,43 +7,58 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        while(true){
+        while (true) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("$ ");
             String command = scanner.nextLine();
-            String[] types = {"type","echo","exit"};
-            if(Objects.equals(command.toLowerCase(), "exit")){
-                return;
-            } else if(command.startsWith("echo ")) {
+            String[] types = {"type", "echo", "exit"};
+            if (Objects.equals(command.toLowerCase(), "exit")) {
+                break;
+            } else if (command.startsWith("echo ")) {
                 System.out.println(command.substring(5));
-            } else if(command.startsWith("type ")) {
+            } else if (command.startsWith("type ")) {
                 boolean found = false;
-                for(String newCommand : types){
-                    if(Objects.equals(command.substring(5),newCommand)){
+                for (String newCommand : types) {
+                    if (Objects.equals(command.substring(5), newCommand)) {
                         found = true;
-                        System.out.println(command.substring(5)+ " is a shell builtin");
+                        System.out.println(command.substring(5) + " is a shell builtin");
                     }
                 }
-                if(!found){
+                if (!found) {
                     String search = System.getenv("PATH");
                     String[] paths = search.split(File.pathSeparator);
-                    for(String word: paths){
-                        Path path = Path.of(word,command.substring(5));
-                        if(Files.isExecutable(path)){
-                            System.out.println(command.substring(5)+" is "+path.toAbsolutePath());
+                    for (String word : paths) {
+                        Path path = Path.of(word, command.substring(5));
+                        if (Files.isExecutable(path)) {
+                            System.out.println(command.substring(5) + " is " + path.toAbsolutePath());
                             found = true;
                             break;
                         }
                     }
                 }
-                if(!found){
-                    System.out.println(command.substring(5)+ ": not found");
+                if (!found) {
+                    System.out.println(command.substring(5) + ": not found");
+                } else if (!found) {
+                    for (String newCommand : types) {
+                        if (Objects.equals(command.substring(5), newCommand)) {
+                            String search = System.getenv("PATH");
+                            String[] paths = search.split(File.pathSeparator);
+                            for (String word : paths) {
+                                Path path = Path.of(word, command.substring(5));
+                                if (Files.isExecutable(path)) {
+                                    System.out.println(command.substring(5) + " is " + path.toAbsolutePath());
+                                    found = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                    }
+
+                }else{
+                    System.out.println(command + ": command not found");
                 }
-
-            } else{
-                System.out.println(command+ ": command not found");
             }
-
         }
     }
 }
